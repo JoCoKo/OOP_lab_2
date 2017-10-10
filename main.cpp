@@ -21,5 +21,7 @@ int main()
     cout << "GetCountAbove= " << first.GetCountAbove(40) << endl;
     cout << "GetCountBelow= " << first.GetCountUnder(40) << endl;
 	getchar();
+	
+	
     return 0;
 }
