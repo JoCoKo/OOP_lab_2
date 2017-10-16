@@ -20,6 +20,7 @@ int main()
     cout << "GetAvg= " << first.GetAvg() << endl;
     cout << "GetCountAbove= " << first.GetCountAbove(40) << endl;
     cout << "GetCountBelow= " << first.GetCountUnder(40) << endl;
+	first.PrintStr();
 	getchar();
     return 0;
 }

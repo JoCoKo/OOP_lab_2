@@ -1,6 +1,8 @@
 #include "StatisticMultiset.h"
 #include <vector>
 #include <fstream>
+#include <set>
+#include <iostream>
 
 StatisticMultiset::StatisticMultiset()
 {
@@ -20,10 +22,24 @@ void StatisticMultiset::AddNum( int num )
                 min=num;
     summ+=num;
 }
+void StatisticMultiset::AddNum(const std::multiset<int>& nums)
+{
+	for (auto it = nums.begin(); it != nums.end(); ++it)
+	{
+		AddNum(*it);
+	}
+}
 void StatisticMultiset::AddNum( const std::vector<int>& nums )
 {
     for (size_t i=0 ; i<nums.size() ; i++)
         AddNum(nums[i]);
+}
+void AddNum(const std::list<int>& nums)
+{
+	for (auto it = nums.begin(); it != nums.end(); ++it)
+	{
+	//	AddNum(*it);
+	}
 }
 void StatisticMultiset::AddNumsFromFile( const char* filename )
 {
@@ -73,6 +89,15 @@ float StatisticMultiset::GetAvg() const
 {
     return count > 0 ? (float)summ / count : 0.0f;
 }
+
+void StatisticMultiset::PrintStr()
+{
+	for (int i = 0; i< count; i++)
+	{
+		std::cout << data[i] << ' ';
+	}
+}
+
 StatisticMultiset::~StatisticMultiset()
 {
     //dtor
