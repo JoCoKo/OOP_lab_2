@@ -4,106 +4,125 @@
 #include <set>
 #include <iostream>
 
-StatisticMultiset::StatisticMultiset()
+/*template<typename T>
+StatisticMultiset<T>::StatisticMultiset()
 {
-	//ctor
-}
-void StatisticMultiset::AddNum(int num)
+    //ctor
+	lastThresholdUnder = 0;
+	lastCountUnder = 0;
+	lastThresholdAbove = 0;
+	lastCountAbove = 0;
+	sum = 0;
+	count = 0;
+}*/
+template<typename T>
+void StatisticMultiset<T>::AddNum( const T& num )
 {
-	data.push_back(num);
-	count++;
-	if (count == 1)
-		min = max = num;
-	else
-		if (num > max)
-			max = num;
-		else
-			if (num < min)
-				min = num;
-	summ += num;
-	if (num > lastThresholdAbove)
-		lastCountAbove++;
-	if (num < lastThresholdUnder)
-		lastCountUnder++;
+    data.push_back(num);
+    count++;
+    if (count==1)
+        min=max=num;
+    else
+        if (num > max)
+            max=num;
+        else
+            if (num < min)
+                min=num;
+    summ+=num;
+    if (num > lastThresholdAbove)
+        lastCountAbove++;
+    if (num < lastThresholdUnder)
+        lastCountUnder++;
 
 }
-void StatisticMultiset::AddNum(const std::multiset<int>& nums)
+template<typename T>
+void StatisticMultiset<T>::AddNum(const std::multiset<T>& nums)
 {
 	for (auto it = nums.begin(); it != nums.end(); ++it)
 	{
 		AddNum(*it);
 	}
 }
-void StatisticMultiset::AddNum(const std::vector<int>& nums)
+template<typename T>
+void StatisticMultiset<T>::AddNum( const std::vector<T>& nums )
 {
-	for (size_t i = 0; i<nums.size(); i++)
-		AddNum(nums[i]);
+    for (size_t i=0 ; i<nums.size() ; i++)
+        AddNum(nums[i]);
 }
-void StatisticMultiset::AddNum(const std::list<int>& nums)
+template<typename T>
+void StatisticMultiset<T>::AddNum(const std::list<T>& nums)
 {
 	for (auto it = nums.begin(); it != nums.end(); ++it)
 	{
 		AddNum(*it);
 	}
 }
-void StatisticMultiset::AddNumsFromFile(const char* filename)
+template<typename T>
+void StatisticMultiset<T>::AddNumsFromFile( const char* filename )
 {
-	std::ifstream fin(filename);
-	int x;
-	while (!fin.eof())
-	{
-		fin >> x;
-		AddNum(x);
-	}
-	fin.close();
+    std::ifstream fin(filename);
+    T x;
+    while(!fin.eof())
+    {
+        fin >> x;
+        AddNum(x);
+    }
+    fin.close();
 }
-void StatisticMultiset::AddNums(const StatisticMultiset& a_stat_set)
+template<typename T>
+void StatisticMultiset<T>::AddNums( const StatisticMultiset& a_stat_set )
 {
-	for (size_t i = 0; i<a_stat_set.count; i++)
-		AddNum(a_stat_set.data[i]);
+    for (size_t i=0; i<a_stat_set.count ;i++)
+        AddNum(a_stat_set.data[i]);
 }
-int StatisticMultiset::GetMax() const
+template<typename T>
+T StatisticMultiset<T>::GetMax() const
 {
-	return max;
+    return max;
 }
-int StatisticMultiset::GetMin() const
+template<typename T>
+T StatisticMultiset<T>::GetMin() const
 {
-	return min;
+    return min;
 }
-size_t StatisticMultiset::GetCountUnder(int threshold) const
+template<typename T>
+size_t StatisticMultiset<T>::GetCountUnder( T threshold ) const
 {
-	if (lastThresholdUnder == threshold)
-		return lastCountUnder;
-	size_t countUnder = 0;
-	for (size_t i = 0; i< count; i++)
-	{
-		if (data[i]< threshold)
-			countUnder++;
-	}
-	lastCountUnder = countUnder;
-	lastThresholdUnder = threshold;
-	return countUnder;
+    if (lastThresholdUnder==threshold)
+        return lastCountUnder;
+    size_t countUnder=0;
+    for (size_t i=0; i< count; i++)
+    {
+        if (data[i]< threshold)
+            countUnder++;
+    }
+    lastCountUnder=countUnder;
+    lastThresholdUnder=threshold;
+    return countUnder;
 }
-size_t StatisticMultiset::GetCountAbove(int threshold) const
+template<typename T>
+size_t StatisticMultiset<T>::GetCountAbove( T threshold ) const
 {
-	if (lastThresholdAbove == threshold)
-		return lastCountAbove;
-	size_t countAbove = 0;
-	for (size_t i = 0; i< count; i++)
-	{
-		if (data[i]> threshold)
-			countAbove++;
-	}
-	lastThresholdAbove = threshold;
-	lastCountAbove = countAbove;
-	return countAbove;
+    if (lastThresholdAbove==threshold)
+        return lastCountAbove;
+    size_t countAbove=0;
+    for (size_t i=0; i< count; i++)
+    {
+        if (data[i]> threshold)
+            countAbove++;
+    }
+    lastThresholdAbove=threshold;
+    lastCountAbove=countAbove;
+    return countAbove;
 }
-float StatisticMultiset::GetAvg() const
+template<typename T>
+float StatisticMultiset<T>::GetAvg() const
 {
-	return count > 0 ? (float)summ / count : 0.0f;
+    return count > 0 ? (float)summ / count : 0.0f;
 }
 
-void StatisticMultiset::PrintStr()
+template<typename T>
+void StatisticMultiset<T>::PrintStr()
 {
 	for (size_t i = 0; i< count; i++)
 	{
@@ -111,7 +130,8 @@ void StatisticMultiset::PrintStr()
 	}
 }
 
-StatisticMultiset::~StatisticMultiset()
+template<typename T>
+StatisticMultiset<T>::~StatisticMultiset()
 {
-	//dtor
+    //dtor
 }
